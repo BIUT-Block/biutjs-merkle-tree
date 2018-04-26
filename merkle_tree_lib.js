@@ -34,17 +34,17 @@ class MerkleTree {
 	* @desc Constructs a Merkle Tree.
 	* All nodes and leaves are stored as Buffers.
 	* Lonely leaf nodes are promoted to the next level up without being hashed again.
-	* @param {Buffer[]} leaves - Array of hashed leaves. Each leaf must be a Buffer.
+	* @param {Buffer[]} raw_data - Array of raw data, will be convert to leaves after hash calculation. Each leaf must be a Buffer.
 	* @param {String} hashAlgo - String of algorithm used for hashing leaves and nodes
 	*/
-	constructor(leaves, hashAlgo) {
+	constructor(raw_data, hashAlgo) {
 		if (supported_hash_algo.indexOf(hashAlgo) < 0)
 			throw TypeError('Expected a supported hash algorithm')
-		if (!Array.isArray(leaves))
+		if (!Array.isArray(raw_data))
 			throw TypeError('Expected correct input format')
 		
 		this.hashAlgo = hashAlgo
-		this.leaves = leaves.map(x => digest(this.hashAlgo, x))
+		this.leaves = raw_data.map(x => digest(this.hashAlgo, x))
 		this.layers = [this.leaves]
 
 		this.createHashes(this.leaves)
@@ -79,8 +79,8 @@ class MerkleTree {
 			this.layers[layerIndex].push(hash)
 		}
 		
-		console.log(layerIndex)
-		console.log(this.layers[layerIndex])
+		//console.log(layerIndex)
+		//console.log(this.layers[layerIndex])
 
 		this.createHashes(this.layers[layerIndex])
 	}
@@ -121,7 +121,7 @@ class MerkleTree {
 	/**
 	* getProof
 	* @desc Returns the proof for a target leaf.
-	* @param {Buffer} leaf - Target leaf
+	* @param {Buffer} raw_data - Target leaf's raw data
 	* @param {Number} [index] - Target leaf index in leaves array.
 	* Use if there are leaves containing duplicate data in order to distinguish it.
 	* @return {Buffer[]} - Array of Buffer hashes.
@@ -133,9 +133,9 @@ class MerkleTree {
 	* const tree = new MerkleTree(leaves, sha3)
 	* const proof = tree.getProof(leaves[2], 2)
 	*/
-	getProof(leaf, index) {
+	getProof(raw_data, index) {
 		const proof = [];
-		leaf = digest(this.hashAlgo, leaf)
+		var leaf = digest(this.hashAlgo, raw_data)
 
 		if (typeof index !== 'number') {
 			index = -1
