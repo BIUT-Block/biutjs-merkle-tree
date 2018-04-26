@@ -140,7 +140,8 @@ https://github.com/miguelmota/merkle-tree
 	
 	
 	
-<a name="中文简介："></a>
+* * *
+# 中文简介
 
 代码用于SEC Merkle Tree Hash计算
 主要的函数：
