@@ -1,83 +1,135 @@
 Class: Merkle Tree
 
-MerkleTree functions:
-	new MerkleTree(raw_data, hashAlgo)
-		.getLeaves() => Array.<Buffer>
-		.getLayers() => Array.<Buffer>
-		.getRoot() => Buffer
-		.getProof(raw_data, [index]) => Array.<Buffer>
-		.verify(proof, targetNode, root) => Boolean
+<a name="MerkleTree"></a>
 
-Explanation:
-	new MerkleTree(raw_data, hashAlgo)
-	Constructs a Merkle Tree.
-	All raw_data(will be converted to leaves and nodes after hash calculation) are stored as Buffers.
+## MerkleTree
+**Kind**: global class
 
-Variables Type:
-	raw_data: <Array.Buffer> Array of raw_data, each raw_data(also leaf) must be a Buffer.
-	hashAlgo: <String> Algorithm used for hashing raw_data, leaves and nodes, now the code only supports "md5", "sha1", "sha256", "sha512", "ripemd160"
+* [MerkleTree](#MerkleTree)
+    * [new MerkleTree(raw_data, hashAlgo)](#new_MerkleTree_new)
+    * [.getLeaves()](#MerkleTree+getLeaves) ⇒ <code>Array.&lt;Buffer&gt;</code>
+    * [.getLayers()](#MerkleTree+getLayers) ⇒ <code>Array.&lt;Buffer&gt;</code>
+    * [.getRoot()](#MerkleTree+getRoot) ⇒ <code>Buffer</code>
+    * [.getProof(raw_data, [index])](#MerkleTree+getProof) ⇒ <code>Array.&lt;Buffer&gt;</code>
+    * [.verify(proof, targetNode, root)](#MerkleTree+verify) ⇒ <code>Boolean</code>
 
-Example:
-	const crypto = require('crypto')
-	const MerkleTree = require('../merkle_tree_lib')
 
-	const raw_data = ['a', 'b', 'c']
-	const tree = new MerkleTree(raw_data, 'sha256')
+* * *
+<a name="new_MerkleTree_new"></a>
 
-Functions:
-	1. merkleTree.getLeaves() => Array.<Buffer>
-	   Returns array of leaves' hash of Merkle Tree.
+### new MerkleTree(raw_data, hashAlgo)
+new MerkleTree(raw_data, hashAlgo)
+Constructs a Merkle Tree.
+All raw_data(will be converted to leaves and nodes after hash calculation) are stored as Buffers.
 
-	   Kind: instance method of MerkleTree Example
-		const leaves = tree.getLeaves()
-	   
-	2. merkleTree.getLayers() => Array.<Buffer>
-	   Returns array of all layers of Merkle Tree, including leaves and root.
 
-	   Kind: instance method of MerkleTree Example
-		const layers = tree.getLayers()
-	   
-	3. merkleTree.getRoot() => Buffer
-	   Returns the Merkle root hash as a Buffer.
+| Param | Type | Description |
+| --- | --- | --- |
+| raw_data | <code>Array.&lt;Buffer&gt;</code> | Array of raw_data, each raw_data(also leaf) must be a Buffer. |
+| hashAlgo | <code>String</code> | Algorithm used for hashing raw_data, leaves and nodes, now the code only supports "md5", "sha1", "sha256", "sha512", "ripemd160" |
 
-	   Kind: instance method of MerkleTree Example
-		const root = tree.getRoot()
-	
-	4. merkleTree.getProof(raw_data, [index]) => Array.<Buffer>
-	   Returns the proof for a target leaf.
 
-	   Kind: instance method of MerkleTree Returns: Array.<Buffer> - - Array of Buffer hashes.
-	   
-	   Variable:
-	   raw_data:	<Buffer>	Target leaf's raw data
-	   [index]: 	<Number>	Target leaf index in leaves array. Use if there are leaves containing duplicate data in order to distinguish it.
-	
-	   If index is not defined, code will traverse the tree to find raw_data's corresponding index. If index is defined, Raw_data is invalid and code will proceed with index only.
-	
-	   Example1:
-		const proof = tree.getProof(raw_data[2])
-	   
-	   Example2:
-		const raw_data = ['a', 'b', 'c']
-		const tree = new MerkleTree(raw_data, "sha256")
-		const proof = tree.getProof(raw_data[2], 2)
-	
-	5. merkleTree.verify(proof, targetNode, root) => Boolean
-	   Returns true if the proof path (array of hashes) can connect the target node to the Merkle root.
+**Example**
+```js
+const crypto = require('crypto')
+const MerkleTree = require('../merkle_tree_lib')
 
-	   Kind: instance method of MerkleTree
+const raw_data = ['a', 'b', 'c']
+const tree = new MerkleTree(raw_data, 'sha256')
+```
 
-	   Variables:
-	   proof:	<Array.Buffer>	Array of proof Buffer hashes that should connect target node to Merkle root.
-	   targetNode:	<Buffer>	Target node raw data Buffer
-	   root:	<Buffer>	Merkle root Buffer
-	   
-	   Example:
-	   const root = tree.getRoot()
-	   const proof = tree.getProof(raw_data[2])
-	   const verified = tree.verify(proof, raw_data[2], root)
-	
-Notes：
+* * *
+
+<a name="MerkleTree+getLeaves"></a>
+
+### merkleTree.getLeaves() ⇒ <code>Array.&lt;Buffer&gt;</code>
+Returns array of leaves of Merkle Tree.
+
+**Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
+**Example**
+```js
+const leaves = tree.getLeaves()
+```
+
+* * *
+
+<a name="MerkleTree+getLayers"></a>
+
+### merkleTree.getLayers() ⇒ <code>Array.&lt;Buffer&gt;</code>
+Returns array of all layers of Merkle Tree, including leaves and root.
+
+**Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
+**Example**
+```js
+const layers = tree.getLayers()
+```
+
+* * *
+
+<a name="MerkleTree+getRoot"></a>
+
+### merkleTree.getRoot() ⇒ <code>Buffer</code>
+Returns the Merkle root hash as a Buffer.
+
+**Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
+**Example**
+```js
+const root = tree.getRoot()
+```
+
+* * *
+
+<a name="MerkleTree+getProof"></a>
+
+### merkleTree.getProof(raw_data, [index]) ⇒ <code>Array.&lt;Buffer&gt;</code>
+Returns the proof for a target leaf.
+
+**Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
+**Returns**: <code>Array.&lt;Buffer&gt;</code> - - Array of Buffer hashes.
+
+| Param | Type | Description |
+| --- | --- | --- |
+| raw_data | <code>Buffer</code> | Target leaf's raw data |
+| [index] | <code>Number</code> | Target leaf index in leaves array. Use if there are leaves containing duplicate data in order to distinguish it. |
+
+If index is not defined, code will traverse the tree to find raw_data's corresponding index. If index is defined, Raw_data is invalid and code will proceed with index only.
+
+**Example**
+```js
+const proof = tree.getProof(raw_data[2])
+```
+**Example**
+```js
+const raw_data = ['a', 'b', 'c']
+const tree = new MerkleTree(raw_data, "sha256")
+const proof = tree.getProof(raw_data[2], 2)
+```
+
+* * *
+
+<a name="MerkleTree+verify"></a>
+
+### merkleTree.verify(proof, targetNode, root) ⇒ <code>Boolean</code>
+Returns true if the proof path (array of hashes) can connect the target node
+to the Merkle root.
+
+**Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| proof | <code>Array.&lt;Buffer&gt;</code> | Array of proof Buffer hashes that should connect target node to Merkle root. |
+| targetNode | <code>Buffer</code> | Target node Buffer |
+| root | <code>Buffer</code> | Merkle root Buffer |
+
+**Example**
+```js
+const root = tree.getRoot()
+const proof = tree.getProof(raw_data[2])
+const verified = tree.verify(proof, raw_data[2], root)
+```
+
+* * *
+# Notes
 As is, this implemenation is vulnerable to a [second pre-image attack](https://en.wikipedia.org/wiki/Merkle_tree#Second_preimage_attack). Use a difference hashing algorithm function for leaves and nodes, so that `H(x) != H'(x)`.
 Also, as is, this implementation is vulnerable to a forgery attack for an unbalanced tree, where the last leaf node can be duplicated to create an artificial balanced tree, resulting in the same Merkle root hash. Do not accept unbalanced tree to prevent this.
 
