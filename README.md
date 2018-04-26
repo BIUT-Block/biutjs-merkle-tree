@@ -140,8 +140,8 @@ https://github.com/miguelmota/merkle-tree
 	
 	
 	
-	
-中文简介：
+<a name="中文简介："></a>
+
 代码用于SEC Merkle Tree Hash计算
 主要的函数：
 1.  定义MerkleTree:	MerkleTree(raw_data, hashAlgo)
