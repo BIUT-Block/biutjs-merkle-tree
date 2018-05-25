@@ -13,14 +13,14 @@ const supported_hash_algo = [
 ]
 
 /**
-    * digest
-    * @desc Returns hash result
-    * @param {String} data - Data for hash calculation
-    * @param {String} hashAlgo - Hash algorithm, must match "supported_hash_algo"
-    * @return {String}
-    * @example
-    * const hash = digest("sha256", 'a')
-    */
+* digest
+* @desc Returns hash result
+* @param {String} data - Data for hash calculation
+* @param {String} hashAlgo - Hash algorithm, must match "supported_hash_algo"
+* @return {String}
+* @example
+* const hash = digest("sha256", 'a')
+*/
 function digest (hashAlgo, data) {
     return crypto.createHash(hashAlgo).update(data).digest()
 }
