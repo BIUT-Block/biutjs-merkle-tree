@@ -1,4 +1,3 @@
-const reverse = require('buffer-reverse')
 const crypto = require('crypto')
 
 /**
