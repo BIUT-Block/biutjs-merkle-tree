@@ -47,10 +47,10 @@ class MerkleTree {
         this.leaves = raw_data.map(x => digest(this.hashAlgo, x))
         this.layers = [this.leaves]
 
-        this.createHashes(this.leaves)
+        this._createHashes(this.leaves)
     }
 
-    createHashes(nodes) {
+    _createHashes(nodes) {
         if (nodes.length === 1) {
             return false
         }
@@ -82,7 +82,7 @@ class MerkleTree {
         //console.log(layerIndex)
         //console.log(this.layers[layerIndex])
 
-        this.createHashes(this.layers[layerIndex])
+        this._createHashes(this.layers[layerIndex])
     }
 
     /**
