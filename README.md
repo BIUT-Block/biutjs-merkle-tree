@@ -1,6 +1,26 @@
-Class: Merkle Tree
-
 <a name="MerkleTree"></a>
+
+* * *
+# 中文简介
+
+代码用于SEC Merkle Tree Hash计算
+主要的函数：
+1.  定义MerkleTree:	MerkleTree(raw_data, hashAlgo)
+	其中raw_data是原始的数据，例如区块链上每个区块utf-8编码形式的数据
+	hashAlgo是Merkle树的hash运算算法，现在仅支持"md5", "sha1", "sha256", "sha512", "ripemd160"
+
+2.  getProof(raw_data, [index]) => Array.<Buffer>
+	该函数会返回目标节点在hash树每一层的配偶节点的位置（左/右）及其hash值，返回类型为带key键的Array
+	该函数配套verify函数，用于确认目标节点的数据是否遭到篡改
+	
+3.  verify(proof, targetNode, root) => Boolean
+	该函数需要的输入为：getProof函数返回的目标节点每一层的配偶节点位置及hash值， 想测试的目标节点 raw data 以及 Merkle树根的值
+	因此可以很容易的计算并确认数据没有遭到篡改
+	
+第二次原像攻击：
+由于Merkle根值只是一个值，只能代表最后的值是否正确，而无法展示其他信息，如树的节点个数，树的层数等等，因此容易受到伪造者攻创建一个具有相同Merkle树根的虚假文档进行攻击
+解决方法：
+每一层的树在计算hash值之前加上所在层数对应的一个前缀值，例如第一层在data前面加0x00，以此类推
 
 ## MerkleTree
 **Kind**: global class
@@ -126,53 +146,4 @@ to the Merkle root.
 const root = tree.getRoot()
 const proof = tree.getProof(raw_data[2])
 const verified = tree.verify(proof, raw_data[2], root)
-```
-
-* * *
-# Notes
-As is, this implemenation is vulnerable to a [second pre-image attack](https://en.wikipedia.org/wiki/Merkle_tree#Second_preimage_attack). Use a difference hashing algorithm function for leaves and nodes, so that `H(x) != H'(x)`.
-Also, as is, this implementation is vulnerable to a forgery attack for an unbalanced tree, where the last leaf node can be duplicated to create an artificial balanced tree, resulting in the same Merkle root hash. Do not accept unbalanced tree to prevent this.
-
-Resources:
-https://github.com/miguelmota/merkle-tree
-
-	
-	
-	
-	
-* * *
-# 中文简介
-
-代码用于SEC Merkle Tree Hash计算
-主要的函数：
-1.  定义MerkleTree:	MerkleTree(raw_data, hashAlgo)
-	其中raw_data是原始的数据，例如区块链上每个区块utf-8编码形式的数据
-	hashAlgo是Merkle树的hash运算算法，现在仅支持"md5", "sha1", "sha256", "sha512", "ripemd160"
-
-2.  getProof(raw_data, [index]) => Array.<Buffer>
-	该函数会返回目标节点在hash树每一层的配偶节点的位置（左/右）及其hash值，返回类型为带key键的Array
-	该函数配套verify函数，用于确认目标节点的数据是否遭到篡改
-	
-3.  verify(proof, targetNode, root) => Boolean
-	该函数需要的输入为：getProof函数返回的目标节点每一层的配偶节点位置及hash值， 想测试的目标节点raw data 以及 Merkle树根的值
-	因此可以很容易的计算并确认数据没有遭到篡改
-	
-第二次原像攻击：
-由于Merkle根值只是一个值，只能代表最后的值是否正确，而无法展示其他信息，如 树的节点个数，树的层数等等，因此容易受到伪造者攻创建一个具有相同Merkle树根的虚假文档进行攻击
-解决方法：
-每一层的树在计算hash值之前加上所在层数对应的一个前缀值，例如第一层在data前面加0x00，以此类推
-	
-	
-
-		.
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+```	
