@@ -4,21 +4,21 @@ const crypto = require('crypto')
 * All the supported hash algorithms
 */
 const supported_hash_algo = [
-    "md5",
-    "sha1",
-    "sha256",
-    "sha512",
-    "ripemd160"
+    'md5',
+    'sha1',
+    'sha256',
+    'sha512',
+    'ripemd160'
 ]
 
 /**
 * digest
 * @desc Returns hash result
 * @param {String} data - Data for hash calculation
-* @param {String} hashAlgo - Hash algorithm, must match "supported_hash_algo"
+* @param {String} hashAlgo - Hash algorithm, must match 'supported_hash_algo'
 * @return {String}
 * @example
-* const hash = digest("sha256", 'a')
+* const hash = digest('sha256', 'a')
 */
 function digest (hashAlgo, data) {
     return crypto.createHash(hashAlgo).update(data).digest()
@@ -133,8 +133,8 @@ class MerkleTree {
     * const proof = tree.getProof(leaves[2], 2)
     */
     getProof(raw_data, index) {
-        const proof = [];
-        var leaf = digest(this.hashAlgo, raw_data)
+        const proof = []
+        let leaf = digest(this.hashAlgo, raw_data)
 
         if (typeof index !== 'number') {
             index = -1
