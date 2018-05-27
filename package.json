@@ -47,6 +47,7 @@
     "node": ">= 7.6.0"
   },
   "dependencies": {
-    "buffer-reverse": "^1.0.1"
+    "buffer-reverse": "^1.0.1",
+    "chai": "^4.1.2"
   }
 }
