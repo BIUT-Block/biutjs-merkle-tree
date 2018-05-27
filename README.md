@@ -1,5 +1,6 @@
 <a name="MerkleTree"></a>
 
+* * *
 ## MerkleTree
 **Kind**: global class
 
