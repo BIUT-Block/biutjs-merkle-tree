@@ -1,4 +1,4 @@
-const MerkleTree = require('../secjs-merkle-tree')
+const MerkleTree = require('../src/index')
 let expect = require('chai').expect
 
 describe('secjs merklet ree test', () => {
