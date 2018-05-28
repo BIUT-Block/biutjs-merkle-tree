@@ -5,27 +5,27 @@
 **Kind**: global class
 
 * [MerkleTree](#MerkleTree)
-    * [new MerkleTree(raw_data, hashAlgo)](#new_MerkleTree_new)
+    * [new MerkleTree(rawData, hashAlgo)](#new_MerkleTree_new)
     * [.getLeaves()](#MerkleTree+getLeaves) ⇒ <code>Array.&lt;Buffer&gt;</code>
     * [.getLayers()](#MerkleTree+getLayers) ⇒ <code>Array.&lt;Buffer&gt;</code>
     * [.getRoot()](#MerkleTree+getRoot) ⇒ <code>Buffer</code>
-    * [.getProof(raw_data, [index])](#MerkleTree+getProof) ⇒ <code>Array.&lt;Buffer&gt;</code>
+    * [.getProof(rawData, [index])](#MerkleTree+getProof) ⇒ <code>Array.&lt;Buffer&gt;</code>
     * [.verify(proof, targetNode, root)](#MerkleTree+verify) ⇒ <code>Boolean</code>
 
 
 * * *
 <a name="new_MerkleTree_new"></a>
 
-### new MerkleTree(raw_data, hashAlgo)
-new MerkleTree(raw_data, hashAlgo)
+### new MerkleTree(rawData, hashAlgo)
+new MerkleTree(rawData, hashAlgo)
 Constructs a Merkle Tree.
-All raw_data(will be converted to leaves and nodes after hash calculation) are stored as Buffers.
+All rawData(will be converted to leaves and nodes after hash calculation) are stored as Buffers.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| raw_data | <code>Array.&lt;Buffer&gt;</code> | Array of raw_data, each raw_data(also leaf) must be a Buffer. |
-| hashAlgo | <code>String</code> | Algorithm used for hashing raw_data, leaves and nodes, now the code only supports "md5", "sha1", "sha256", "sha512", "ripemd160" |
+| rawData | <code>Array.&lt;Buffer&gt;</code> | Array of rawData, each rawData(also leaf) must be a Buffer. |
+| hashAlgo | <code>String</code> | Algorithm used for hashing rawData, leaves and nodes, now the code only supports "md5", "sha1", "sha256", "sha512", "ripemd160" |
 
 
 **Example**
@@ -33,8 +33,8 @@ All raw_data(will be converted to leaves and nodes after hash calculation) are s
 const crypto = require('crypto')
 const MerkleTree = require('../merkle_tree_lib')
 
-const raw_data = ['a', 'b', 'c']
-const tree = new MerkleTree(raw_data, 'sha256')
+const rawData = ['a', 'b', 'c']
+const tree = new MerkleTree(rawData, 'sha256')
 ```
 
 * * *
@@ -80,7 +80,7 @@ const root = tree.getRoot()
 
 <a name="MerkleTree+getProof"></a>
 
-### merkleTree.getProof(raw_data, [index]) ⇒ <code>Array.&lt;Buffer&gt;</code>
+### merkleTree.getProof(rawData, [index]) ⇒ <code>Array.&lt;Buffer&gt;</code>
 Returns the proof for a target leaf.
 
 **Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
@@ -88,20 +88,20 @@ Returns the proof for a target leaf.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| raw_data | <code>Buffer</code> | Target leaf's raw data |
+| rawData | <code>Buffer</code> | Target leaf's raw data |
 | [index] | <code>Number</code> | Target leaf index in leaves array. Use if there are leaves containing duplicate data in order to distinguish it. |
 
-If index is not defined, code will traverse the tree to find raw_data's corresponding index. If index is defined, Raw_data is invalid and code will proceed with index only.
+If index is not defined, code will traverse the tree to find rawData's corresponding index. If index is defined, rawData is invalid and code will proceed with index only.
 
 **Example**
 ```js
-const proof = tree.getProof(raw_data[2])
+const proof = tree.getProof(rawData[2])
 ```
 **Example**
 ```js
-const raw_data = ['a', 'b', 'c']
-const tree = new MerkleTree(raw_data, "sha256")
-const proof = tree.getProof(raw_data[2], 2)
+const rawData = ['a', 'b', 'c']
+const tree = new MerkleTree(rawData, "sha256")
+const proof = tree.getProof(rawData[2], 2)
 ```
 
 * * *
@@ -123,8 +123,8 @@ to the Merkle root.
 **Example**
 ```js
 const root = tree.getRoot()
-const proof = tree.getProof(raw_data[2])
-const verified = tree.verify(proof, raw_data[2], root)
+const proof = tree.getProof(rawData[2])
+const verified = tree.verify(proof, rawData[2], root)
 ```	
 
 * * *
@@ -132,11 +132,11 @@ const verified = tree.verify(proof, raw_data[2], root)
 
 代码用于SEC Merkle Tree Hash计算
 主要的函数：
-1.  定义MerkleTree:	MerkleTree(raw_data, hashAlgo)
-	其中raw_data是原始的数据，例如区块链上每个区块utf-8编码形式的数据
+1.  定义MerkleTree:	MerkleTree(rawData, hashAlgo)
+	其中rawData是原始的数据，例如区块链上每个区块utf-8编码形式的数据
 	hashAlgo是Merkle树的hash运算算法，现在仅支持"md5", "sha1", "sha256", "sha512", "ripemd160"
 
-2.  getProof(raw_data, [index]) => Array.<Buffer>
+2.  getProof(rawData, [index]) => Array.<Buffer>
 	该函数会返回目标节点在hash树每一层的配偶节点的位置（左/右）及其hash值，返回类型为带key键的Array
 	该函数配套verify函数，用于确认目标节点的数据是否遭到篡改
 	
