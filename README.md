@@ -31,7 +31,7 @@ All rawData(will be converted to leaves and nodes after hash calculation) are st
 **Example**
 ```js
 const crypto = require('crypto')
-const MerkleTree = require('../merkle_tree_lib')
+const MerkleTree = require('../src/index')
 
 const rawData = ['a', 'b', 'c']
 const tree = new MerkleTree(rawData, 'sha256')
