@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@sec-block/secjs-block": "^1.0.6",
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "describe": "^1.2.0"
   },
   "devDependencies": {},
   "scripts": {
