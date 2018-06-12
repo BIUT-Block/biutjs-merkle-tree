@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SECblock/secjs-merkle-tree.git"
+    "url": "git+https://github.com/SEC-block/secjs-merkle-tree.git"
   },
   "keywords": [
     "secjs",
@@ -27,7 +27,7 @@
   "author": "Weihan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SECblock/secjs-merkle-tree/issues"
+    "url": "https://github.com/SEC-block/secjs-merkle-tree/issues"
   },
-  "homepage": "https://github.com/SECblock/secjs-merkle-tree#README"
+  "homepage": "https://github.com/SEC-block/secjs-merkle-tree#README"
 }

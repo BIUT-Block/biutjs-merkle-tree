@@ -1,11 +1,13 @@
 <a name="MerkleTree"></a>
 
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard) 
+
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)]
+
 * * *
 ## MerkleTree
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-
-**Kind**: global class
+This package is used for SEC blockchain merkle tree.
 
 * [MerkleTree](#MerkleTree)
     * [new MerkleTree(rawData, hashAlgo)](#new_MerkleTree_new)
