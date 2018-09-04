@@ -14,7 +14,7 @@ This package is used for SEC blockchain merkle tree.
     * [.getLeaves()](#MerkleTree+getLeaves) ⇒ <code>Array.&lt;Buffer&gt;</code>
     * [.getLayers()](#MerkleTree+getLayers) ⇒ <code>Array.&lt;Buffer&gt;</code>
     * [.getRoot()](#MerkleTree+getRoot) ⇒ <code>Buffer</code>
-    * [.getProof(rawData, [index])](#MerkleTree+getProof) ⇒ <code>Array.&lt;Buffer&gt;</code>
+    * [.getProof(rawData, [index])](#MerkleTree+getProof) ⇒ <code>Array.&lt;Object&gt;</code>
     * [.verify(proof, targetNode, root)](#MerkleTree+verify) ⇒ <code>Boolean</code>
 
 
@@ -29,8 +29,8 @@ All rawData(will be converted to leaves and nodes after hash calculation) are st
 
 | Param | Type | Description |
 | --- | --- | --- |
-| rawData | <code>Array.&lt;Buffer&gt;</code> | Array of rawData, each rawData(also leaf) must be a Buffer. |
-| hashAlgo | <code>String</code> | Algorithm used for hashing rawData, leaves and nodes, now the code only supports "md5", "sha1", "sha256", "sha512", "ripemd160" |
+| rawData | <code>Buffer[], Array[]</code> | Array of raw data, will be convert to leaves after hash calculation |
+| hashAlgo | <code>String</code> | Algorithm used to hash rawData, leaves and nodes, now the code only supports "md5", "sha1", "sha256", "sha512", "ripemd160" |
 
 
 **Example**
@@ -89,11 +89,11 @@ const root = tree.getRoot()
 Returns the proof for a target leaf.
 
 **Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
-**Returns**: <code>Array.&lt;Buffer&gt;</code> - - Array of Buffer hashes.
+**Returns**: <code>Array.&lt;Object&gt;</code> - - Array of json object
 
 | Param | Type | Description |
 | --- | --- | --- |
-| rawData | <code>Buffer</code> | Target leaf's raw data |
+| rawData | <code>Buffer, String</code> | Target leaf's raw data |
 | [index] | <code>Number</code> | Target leaf index in leaves array. Use if there are leaves containing duplicate data in order to distinguish it. |
 
 If index is not defined, code will traverse the tree to find rawData's corresponding index. If index is defined, rawData is invalid and code will proceed with index only.
@@ -114,15 +114,14 @@ const proof = tree.getProof(rawData[2], 2)
 <a name="MerkleTree+verify"></a>
 
 ### merkleTree.verify(proof, targetNode, root) ⇒ <code>Boolean</code>
-Returns true if the proof path (array of hashes) can connect the target node
-to the Merkle root.
+Returns true if the proof path (array of hashes) can connect the target node to the Merkle root.
 
 **Kind**: instance method of [<code>MerkleTree</code>](#MerkleTree)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| proof | <code>Array.&lt;Buffer&gt;</code> | Array of proof Buffer hashes that should connect target node to Merkle root. |
-| targetNode | <code>Buffer</code> | Target node Buffer |
+| proof | <code>Array.&lt;Object&gt;</code> | Array of json object |
+| targetNode | <code>Buffer, String</code> | Target node Buffer |
 | root | <code>Buffer</code> | Merkle root Buffer |
 
 **Example**

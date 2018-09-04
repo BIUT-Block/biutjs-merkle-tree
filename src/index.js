@@ -14,7 +14,7 @@ const supportedHashAlgo = [
 /**
 * digest
 * @desc Returns hash result
-* @param {String} data - Data for hash calculation
+* @param {Buffer, String} data - Data for hash calculation
 * @param {String} hashAlgo - Hash algorithm, must match 'supportedHashAlgo'
 * @return {String}
 * @example
@@ -33,8 +33,8 @@ class MerkleTree {
     * @desc Constructs a Merkle Tree.
     * All nodes and leaves are stored as Buffers.
     * Lonely leaf nodes are promoted to the next level up without being hashed again.
-    * @param {Buffer[]} rawData - Array of raw data, will be convert to leaves after hash calculation. Each leaf must be a Buffer.
-    * @param {String} hashAlgo - String of algorithm used for hashing leaves and nodes
+    * @param {Buffer[], String[]} rawData - Array of raw data, will be convert to leaves after hash calculation
+    * @param {String} hashAlgo - Algorithm used to hash rawData, leaves and nodes, now the code only supports "md5", "sha1", "sha256", "sha512", "ripemd160"
     */
   constructor (rawData, hashAlgo) {
     if (supportedHashAlgo.indexOf(hashAlgo) < 0) { throw TypeError('Expected a supported hash algorithm') }
@@ -118,17 +118,12 @@ class MerkleTree {
   /**
     * getProof
     * @desc Returns the proof for a target leaf.
-    * @param {Buffer} rawData - Target leaf's raw data
+    * @param {Buffer, String} rawData - Target leaf's raw data
     * @param {Number} [index] - Target leaf index in leaves array.
     * Use if there are leaves containing duplicate data in order to distinguish it.
-    * @return {Buffer[]} - Array of Buffer hashes.
+    * @return {Object[]} - Array of json object.
     * @example
     * const proof = tree.getProof(leaves[2])
-    *
-    * @example
-    * const leaves = ['a', 'b', 'a'].map(x => sha3(x))
-    * const tree = new MerkleTree(leaves, sha3)
-    * const proof = tree.getProof(leaves[2], 2)
     */
   getProof (rawData, index) {
     const proof = []
@@ -171,16 +166,15 @@ class MerkleTree {
     * verify
     * @desc Returns true if the proof path (array of hashes) can connect the target node
     * to the Merkle root.
-    * @param {Buffer[]} proof - Array of proof Buffer hashes that should connect
+    * @param {Object[]} proof - Array of json object
     * target node to Merkle root.
-    * @param {Buffer} targetNode - Target node Buffer
+    * @param {Buffer, String} targetNode - Target node data
     * @param {Buffer} root - Merkle root Buffer
     * @return {Boolean}
     * @example
     * const root = tree.getRoot()
     * const proof = tree.getProof(leaves[2])
     * const verified = tree.verify(proof, leaves[2], root)
-    *
     */
   verify (proof, targetNode, root) {
     let hash = digest(this.hashAlgo, targetNode)
