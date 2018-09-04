@@ -1,6 +1,6 @@
 {
   "name": "@sec-block/secjs-merkle-tree",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "sec blockchain merkle tree lib",
   "main": "src/index.js",
   "directories": {
